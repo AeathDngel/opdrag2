@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Online_Scheduler
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+                      
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            string connectionString;
+            SqlConnection cnn;
+
+            connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\App_Data\Process_DB.mdf; Integrated Security = True";
+
+            cnn = new SqlConnection(connectionString);
+
+            SqlCommand command;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = "";
+            int id = gviewProcess.Rows.Count + 1;
+            sql = "INSERT INTO process_info (process_id, process_name, process_start, process_time) VALUES ("+id+", '" + txtName.Text + "', " + int.Parse(txtStart.Text) + ", " + int.Parse(txtTime.Text) + ")";
+
+            cnn.Open();
+
+            command = new SqlCommand(sql, cnn);
+
+            adapter.InsertCommand = new SqlCommand(sql, cnn);
+            adapter.InsertCommand.ExecuteNonQuery();
+
+            command.Dispose();
+
+            cnn.Close();
+
+            txtName.Text = "";
+            txtStart.Text = "";
+            txtTime.Text = "";
+
+            gviewProcess.DataBind();
+        }
+    }
+}
