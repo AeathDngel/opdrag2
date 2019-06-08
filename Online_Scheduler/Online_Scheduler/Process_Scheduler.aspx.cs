@@ -1,0 +1,259 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Timers;
+
+namespace Online_Scheduler
+{
+    public partial class Process_Scheduler : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            lbxProcesses.Items.Clear();
+            lblDisplay.Text = "";
+
+            string connectionString;
+            SqlConnection cnn;
+
+            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\App_Data\Process_DB.mdf;Integrated Security=True";
+
+            cnn = new SqlConnection(connectionString);
+
+            SqlCommand command;
+
+            SqlDataReader reader;
+
+            string sql = "";
+
+            sql = "SELECT process_name, process_start, process_time FROM process_info ORDER BY process_start ASC";
+
+            command = new SqlCommand(sql, cnn);
+
+            cnn.Open();
+
+            reader = command.ExecuteReader();
+
+
+
+
+
+            int nrRows = 0;
+
+            while (reader.Read())
+            {
+                nrRows++;
+            }
+
+            Session["RowCount"] = nrRows;
+
+            Task[] tasks = new Task[nrRows];
+
+            reader.Close();
+
+            SqlDataReader reader2;
+
+            reader2 = command.ExecuteReader();
+
+            int counter = 0;
+
+            while (reader2.Read())
+            {
+
+                string name = reader2.GetValue(0).ToString();
+                string start = reader2.GetValue(1).ToString();
+                string time = reader2.GetValue(2).ToString();
+
+                lbxProcesses.Items.Add("Name: " + name + ",        Start: " + start + ",        Time: " + time);
+                tasks[counter] = new Task(name, Convert.ToInt32(start), Convert.ToInt32(time));
+                //lblDisplay.Text += tasks[counter].GetName();
+                counter++;
+            }
+
+            Session["Tasks"] = tasks;
+
+            reader2.Close();
+            command.Dispose();
+            cnn.Close();
+        }
+
+        protected void btnStep_Click(object sender, EventArgs e)
+        {
+
+            Step();
+        }
+
+
+
+        private void Step()
+        {
+            int currentTime = int.Parse(lblCurrentTime.Text) + 1;
+            lblCurrentTime.Text = currentTime.ToString();
+            Session["CurrentTime"] = currentTime;
+
+            Task[] tasks = (Task[])Session["Tasks"];
+
+            int rowCount = Convert.ToInt32(Session["RowCount"]);
+
+            List<int> newTasks = GetNewTasks(tasks, rowCount);
+
+            for (int i = 0; i < newTasks.Count; i++)
+            {
+                lbxQ1.Items.Add(tasks[newTasks[i]].GetName() + ", Time: " + tasks[newTasks[i]].GetTime());
+            }
+
+            StartNextProcess();
+        }
+
+
+
+        private List<int> GetNewTasks(Task[] pTasks, int nrOfTasks)
+        {
+            List<int> indexes = new List<int>();
+            int time = Convert.ToInt32(Session["CurrentTime"]);
+
+            for (int i = 0; i < pTasks.Length; i++)
+            {
+                if (pTasks[i].GetStartTime() == time)
+                {
+                    indexes.Add(i);
+                }
+            }
+
+            return indexes;
+        }
+
+
+
+
+        private void StartNextProcess()
+        {
+            int currentQ = Convert.ToInt32(Session["CurrentQ"]);
+            int currentTask = Convert.ToInt32(Session["CurrentTask"]);
+
+            if (Session["CurrentTask"] == null)
+            {
+                currentTask = 0;
+                Session["CurrentTask"] = currentTask;
+            }
+
+            if (Session["CurrentQ"] == null)
+            {
+                currentQ = 1;
+                Session["CurrentQ"] = currentQ;
+                Response.Write(currentQ + " is Current Q");
+            }
+
+            int quanta = 0;
+
+            if (currentQ == 1)
+            {
+                quanta = 2;
+            }
+            else if (currentQ == 2)
+            {
+                quanta = 5;
+            }
+            else if (currentQ == 3)
+            {
+                quanta = 11;
+            }
+            else if (currentQ == 4)
+            {
+                quanta = 20;
+            }
+
+            if (Convert.ToInt32(Session["CurrentTime"]) != 1)
+            {
+                runTask(quanta, currentTask, currentQ);
+            }
+
+
+        }
+
+        public void runTask(int quanta, int curTask, int curQ)
+        {
+            try
+            {
+                if (curQ == 1)
+                {
+                    string item = lbxQ1.Items[curTask].Text;
+                    string noTime = item.Remove(item.LastIndexOf(' ') + 1);
+                    int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
+                    //Response.Write(time.ToString());
+
+                    time -= 1;
+                    int timeRan = Convert.ToInt32(Session["TimeRan"]);
+                    timeRan += 1;
+                    Session["TimeRan"] = timeRan;
+
+                    lbxQ1.Items[curTask].Text = item = noTime + "" + time;
+
+                    //int curTime = Convert.ToInt32(Session["CurrentTime"]) + quanta - 1;
+                    //Session["CurrentTime"] = curTime.ToString();
+                    //lblCurrentTime.Text = curTime.ToString();
+
+                    if (time <= 0)
+                    {
+                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")));
+                        lbxQ1.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                    else if (Convert.ToInt32(Session["TimeRan"]) == quanta)
+                    {
+                        item = noTime + "" + time;
+                        lbxQ2.Items.Add(item);
+                        lbxQ1.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                }
+                else if (curQ == 2)
+                {
+                    string item = lbxQ1.Items[curTask].Text;
+                    string noTime = item.Remove(item.LastIndexOf(' ') + 1);
+                    int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
+                    //Response.Write(time.ToString());
+
+                    time -= 1;
+                    int timeRan = Convert.ToInt32(Session["TimeRan"]);
+                    timeRan += 1;
+                    Session["TimeRan"] = timeRan;
+
+                    lbxQ2.Items[curTask].Text = item = noTime + "" + time;
+
+                    //int curTime = Convert.ToInt32(Session["CurrentTime"]) + quanta - 1;
+                    //Session["CurrentTime"] = curTime.ToString();
+                    //lblCurrentTime.Text = curTime.ToString();
+
+                    if (time <= 0)
+                    {
+                        lbxCompleted.Items.Add(item);
+                        lbxQ2.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                    else if (Convert.ToInt32(Session["TimeRan"]) == quanta)
+                    {
+                        item = noTime + "" + time;
+                        lbxQ3.Items.Add(item);
+                        lbxQ2.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //int currentQ = Convert.ToInt32(Session["CurrentQ"]) + 1;
+                //Session["CurrentQ"] = currentQ;
+                Response.Write(e.ToString());
+                
+            }
+            
+
+
+
+        }
+    }    
+}

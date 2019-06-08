@@ -47,5 +47,10 @@ namespace Online_Scheduler
 
             gviewProcess.DataBind();
         }
+
+        protected void btnStart_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Process_Scheduler.aspx");
+        }
     }
 }

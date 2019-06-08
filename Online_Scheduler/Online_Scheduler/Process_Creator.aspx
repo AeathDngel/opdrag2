@@ -41,6 +41,8 @@
             </Columns>
         </asp:GridView>
         <asp:SqlDataSource ID="ProcessDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Process_Info]"></asp:SqlDataSource>
+        <br />
+        <asp:Button ID="btnStart" runat="server" OnClick="btnStart_Click" Text="Start Scheduler" />
     </form>
 </body>
 </html>
