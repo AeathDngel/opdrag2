@@ -78,6 +78,9 @@ namespace Online_Scheduler
             reader2.Close();
             command.Dispose();
             cnn.Close();
+
+           
+            
         }
 
         protected void btnStep_Click(object sender, EventArgs e)
@@ -105,7 +108,7 @@ namespace Online_Scheduler
                 lbxQ1.Items.Add(tasks[newTasks[i]].GetName() + ", Time: " + tasks[newTasks[i]].GetTime());
             }
 
-            StartNextProcess();
+            GetNextProcessInfo();
         }
 
 
@@ -129,7 +132,7 @@ namespace Online_Scheduler
 
 
 
-        private void StartNextProcess()
+        private void GetNextProcessInfo()
         {
             int currentQ = Convert.ToInt32(Session["CurrentQ"]);
             int currentTask = Convert.ToInt32(Session["CurrentTask"]);
@@ -144,42 +147,26 @@ namespace Online_Scheduler
             {
                 currentQ = 1;
                 Session["CurrentQ"] = currentQ;
-                Response.Write(currentQ + " is Current Q");
+                
             }
 
-            int quanta = 0;
+            
 
-            if (currentQ == 1)
-            {
-                quanta = 2;
-            }
-            else if (currentQ == 2)
-            {
-                quanta = 5;
-            }
-            else if (currentQ == 3)
-            {
-                quanta = 11;
-            }
-            else if (currentQ == 4)
-            {
-                quanta = 20;
-            }
-
-            if (Convert.ToInt32(Session["CurrentTime"]) != 1)
-            {
-                runTask(quanta, currentTask, currentQ);
-            }
+            //if (Convert.ToInt32(Session["CurrentTime"]) != 1)
+            //{
+                runTask(currentTask, currentQ);
+            //}
 
 
         }
 
-        public void runTask(int quanta, int curTask, int curQ)
+        public void runTask(int curTask, int curQ)
         {
             try
             {
                 if (curQ == 1)
                 {
+                    int quanta = Convert.ToInt32(Session["Q1"]);
                     string item = lbxQ1.Items[curTask].Text;
                     string noTime = item.Remove(item.LastIndexOf(' ') + 1);
                     int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
@@ -196,6 +183,8 @@ namespace Online_Scheduler
                     //Session["CurrentTime"] = curTime.ToString();
                     //lblCurrentTime.Text = curTime.ToString();
 
+                    Console.Write(timeRan);
+
                     if (time <= 0)
                     {
                         lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")));
@@ -210,9 +199,11 @@ namespace Online_Scheduler
                         Session["TimeRan"] = "0";
                     }
                 }
+                //Q 2//
                 else if (curQ == 2)
                 {
-                    string item = lbxQ1.Items[curTask].Text;
+                    int quanta = Convert.ToInt32(Session["Q2"]);
+                    string item = lbxQ2.Items[curTask].Text;
                     string noTime = item.Remove(item.LastIndexOf(' ') + 1);
                     int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
                     //Response.Write(time.ToString());
@@ -242,18 +233,141 @@ namespace Online_Scheduler
                         Session["TimeRan"] = "0";
                     }
                 }
+                //Q 3//
+                else if (curQ == 3)
+                {
+                    int quanta = Convert.ToInt32(Session["Q3"]);
+                    string item = lbxQ3.Items[curTask].Text;
+                    string noTime = item.Remove(item.LastIndexOf(' ') + 1);
+                    int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
+                    //Response.Write(time.ToString());
+
+                    time -= 1;
+                    int timeRan = Convert.ToInt32(Session["TimeRan"]);
+                    timeRan += 1;
+                    Session["TimeRan"] = timeRan;
+
+                    lbxQ3.Items[curTask].Text = item = noTime + "" + time;
+
+                    //int curTime = Convert.ToInt32(Session["CurrentTime"]) + quanta - 1;
+                    //Session["CurrentTime"] = curTime.ToString();
+                    //lblCurrentTime.Text = curTime.ToString();
+
+                    if (time <= 0)
+                    {
+                        lbxCompleted.Items.Add(item);
+                        lbxQ3.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                    else if (Convert.ToInt32(Session["TimeRan"]) == quanta)
+                    {
+                        item = noTime + "" + time;
+                        lbxQ4.Items.Add(item);
+                        lbxQ3.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                }
+                //Q 4//
+                else if (curQ == 4)
+                {
+                    int quanta = Convert.ToInt32(Session["Q4"]);
+                    string item = lbxQ4.Items[curTask].Text;
+                    string noTime = item.Remove(item.LastIndexOf(' ') + 1);
+                    int time = Convert.ToInt32(item.Substring(item.LastIndexOf(' ') + 1));
+                    //Response.Write(time.ToString());
+
+                    time -= 1;
+                    int timeRan = Convert.ToInt32(Session["TimeRan"]);
+                    timeRan += 1;
+                    Session["TimeRan"] = timeRan;
+
+                    lbxQ4.Items[curTask].Text = item = noTime + "" + time;
+
+                    //int curTime = Convert.ToInt32(Session["CurrentTime"]) + quanta - 1;
+                    //Session["CurrentTime"] = curTime.ToString();
+                    //lblCurrentTime.Text = curTime.ToString();
+
+                    if (time <= 0)
+                    {
+                        lbxCompleted.Items.Add(item);
+                        lbxQ4.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                    else if (Convert.ToInt32(Session["TimeRan"]) == quanta)
+                    {
+                        item = noTime + "" + time;
+                        lbxQ4.Items.Add(item);
+                        lbxQ4.Items.RemoveAt(curTask);
+                        Session["TimeRan"] = "0";
+                    }
+                }
+                lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                //int currentQ = Convert.ToInt32(Session["CurrentQ"]) + 1;
-                //Session["CurrentQ"] = currentQ;
-                Response.Write(e.ToString());
-                
+
+                //When Q is empty find next Q
+                if(lbxQ1.Items.Count == 0 && lbxCompleted.Items.Count != 0)
+                {
+                    Session["CurrentQ"] = 2;
+                    lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
+
+                    if (lbxQ2.Items.Count == 0 && lbxQ1.Items.Count == 0)
+                    {
+                        Session["CurrentQ"] = 3;
+                        lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
+
+                        if(lbxQ3.Items.Count == 0 && lbxQ2.Items.Count == 0 && lbxQ1.Items.Count == 0)
+                        {
+                            Session["CurrentQ"] = 4;
+                            lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
+                        }
+                    }
+                }
+                else if (lbxQ2.Items.Count == 0)
+                {
+                    Session["CurrentQ"] = 1;
+                    lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
+
+                    
+
+                }
+                                
             }
-            
+        }
 
+        protected void sldrQ1_TextChanged(object sender, EventArgs e)
+        {
 
+        }
 
+        protected void txtQ1_TextChanged(object sender, EventArgs e)
+        {
+            sldrQ2_SliderExtender.Minimum = Convert.ToInt32(txtQ1.Text);
+            lblDisplay.Text = "CHANGED! 1";
+            txtQ2.Text = txtQ1.Text;
+            Session["Q1"] = txtQ1.Text;
+        }
+
+        protected void txtQ2_TextChanged(object sender, EventArgs e)
+        {
+            sldrQ3_SliderExtender.Minimum = Convert.ToInt32(txtQ2.Text);
+            lblDisplay.Text = "CHANGED! 2";
+            txtQ3.Text = txtQ2.Text;
+            Session["Q2"] = txtQ2.Text;
+        }
+
+        protected void txtQ3_TextChanged(object sender, EventArgs e)
+        {
+            sldrQ4_SliderExtender.Minimum = Convert.ToInt32(txtQ3.Text);
+            lblDisplay.Text = "CHANGED! 3";
+            txtQ4.Text = txtQ3.Text;
+            Session["Q3"] = txtQ3.Text;
+        }
+
+        protected void txtQ4_TextChanged(object sender, EventArgs e)
+        {
+            Session["Q4"] = txtQ4.Text;
         }
     }    
 }

@@ -54,3 +54,5 @@ C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Sched
 C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\obj\Debug\Online_Scheduler.csproj.CopyComplete
 C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\obj\Debug\Online_Scheduler.dll
 C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\obj\Debug\Online_Scheduler.pdb
+C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\bin\ASPSlider.dll
+C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\bin\AjaxControlToolkit.dll
