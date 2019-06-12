@@ -20,7 +20,11 @@ namespace Online_Scheduler
             string connectionString;
             SqlConnection cnn;
 
-            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6).Replace("bin", "App_Data") + "\\Process_DB.mdf;Integrated Security=True";
+            //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6).Replace("bin", "App_Data") + "\\Process_DB.mdf;Integrated Security=True";
+
+            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Process_DB.mdf;Integrated Security=True";
+
+            //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Process_DB; Integrated Security=SSPI; User Id= sa; Password= Password123";
 
             cnn = new SqlConnection(connectionString);
 
