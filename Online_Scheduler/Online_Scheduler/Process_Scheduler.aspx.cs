@@ -21,7 +21,9 @@ namespace Online_Scheduler
 
             //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6).Replace("bin", "App_Data") +"\\Process_DB.mdf;Integrated Security=True";
 
-            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Process_DB.mdf;Integrated Security=True";
+            //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Process_DB.mdf;Integrated Security=True";
+
+            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
             cnn = new SqlConnection(connectionString);
 
@@ -389,7 +391,9 @@ namespace Online_Scheduler
 
             //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6).Replace("bin", "App_Data") + "\\Process_DB.mdf;Integrated Security=True";
 
-            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Process_DB.mdf;Integrated Security=True";
+            //connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Process_DB.mdf;Integrated Security=True";
+
+            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
             cnn = new SqlConnection(connectionString);
 
