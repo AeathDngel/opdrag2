@@ -11,8 +11,6 @@
         <asp:Label ID="Label1" runat="server" Font-Bold="False" Font-Names="Impact" Font-Size="XX-Large" Text="Process Creator"></asp:Label>
         <br />
         <br />
-        <br />
-        <br />
         Process Details:<br />
         <br />
         <br />

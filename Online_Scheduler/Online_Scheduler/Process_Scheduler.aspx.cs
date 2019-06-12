@@ -187,7 +187,7 @@ namespace Online_Scheduler
 
                     if (time <= 0)
                     {
-                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")));
+                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")) + " - Finished at: " + lblCurrentTime.Text);
                         lbxQ1.Items.RemoveAt(curTask);
                         Session["TimeRan"] = "0";
                     }
@@ -221,7 +221,7 @@ namespace Online_Scheduler
 
                     if (time <= 0)
                     {
-                        lbxCompleted.Items.Add(item);
+                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")) + " - Finished at: " + lblCurrentTime.Text);
                         lbxQ2.Items.RemoveAt(curTask);
                         Session["TimeRan"] = "0";
                     }
@@ -255,7 +255,7 @@ namespace Online_Scheduler
 
                     if (time <= 0)
                     {
-                        lbxCompleted.Items.Add(item);
+                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")) + " - Finished at: " + lblCurrentTime.Text);
                         lbxQ3.Items.RemoveAt(curTask);
                         Session["TimeRan"] = "0";
                     }
@@ -286,10 +286,10 @@ namespace Online_Scheduler
                     //int curTime = Convert.ToInt32(Session["CurrentTime"]) + quanta - 1;
                     //Session["CurrentTime"] = curTime.ToString();
                     //lblCurrentTime.Text = curTime.ToString();
-
+                    
                     if (time <= 0)
                     {
-                        lbxCompleted.Items.Add(item);
+                        lbxCompleted.Items.Add(item.Remove(item.IndexOf(",")) + " - Finished at: " + lblCurrentTime.Text);
                         lbxQ4.Items.RemoveAt(curTask);
                         Session["TimeRan"] = "0";
                     }
@@ -303,22 +303,25 @@ namespace Online_Scheduler
                 }
                 lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                lblDisplay.Text += e.Message;
                 //When Q is empty find next Q
-                if(lbxQ1.Items.Count == 0 && lbxCompleted.Items.Count != 0)
+                if(lbxQ1.Items.Count == 0)
                 {
+                    lblDisplay.Text = "2";
                     Session["CurrentQ"] = 2;
                     lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
 
                     if (lbxQ2.Items.Count == 0 && lbxQ1.Items.Count == 0)
                     {
+                        lblDisplay.Text = "3";
                         Session["CurrentQ"] = 3;
                         lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
 
                         if(lbxQ3.Items.Count == 0 && lbxQ2.Items.Count == 0 && lbxQ1.Items.Count == 0)
                         {
+                            lblDisplay.Text = "4";
                             Session["CurrentQ"] = 4;
                             lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
                         }
@@ -326,6 +329,7 @@ namespace Online_Scheduler
                 }
                 else if (lbxQ2.Items.Count == 0)
                 {
+                    lblDisplay.Text = "1";
                     Session["CurrentQ"] = 1;
                     lblDisplay.Text = (Session["CurrentQ"] + " is Current Q");
 
@@ -368,6 +372,34 @@ namespace Online_Scheduler
         protected void txtQ4_TextChanged(object sender, EventArgs e)
         {
             Session["Q4"] = txtQ4.Text;
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string connectionString;
+            SqlConnection cnn;
+
+            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\App_Data\Process_DB.mdf;Integrated Security=True";
+
+            cnn = new SqlConnection(connectionString);
+
+            SqlCommand command;
+
+            SqlDataReader reader;
+
+            string sql = "";
+
+            sql = "DELETE FROM process_info";
+
+            command = new SqlCommand(sql, cnn);
+
+            cnn.Open();
+
+            reader = command.ExecuteReader();
+
+            cnn.Close();
+
+            Response.Redirect("Process_Creator.aspx");
         }
     }    
 }

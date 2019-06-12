@@ -14,44 +14,41 @@
             <br />
             Unloaded Processes:<br />
             <br />
-            <asp:ListBox ID="lbxProcesses" runat="server" Height="192px" Width="374px"></asp:ListBox>
-            <br />
+            <asp:ListBox ID="lbxProcesses" runat="server" Height="131px" Width="374px"></asp:ListBox>
             <br />
             <asp:Label ID="lblDisplay" runat="server"></asp:Label>
             <br />
+            Queue 1 Run time: 
+            <asp:TextBox ID="txtQ1" runat="server" Width="16px" OnTextChanged="txtQ1_TextChanged" onkeypress ="document.getElementById('txtQ2').innerHTML = this.value;" AutoPostBack="True">1</asp:TextBox>
             <br />
             <asp:TextBox ID="sldrQ1" runat="server" OnTextChanged="sldrQ1_TextChanged"></asp:TextBox>
             <ajaxToolkit:SliderExtender ID="sldrQ1_SliderExtender" runat="server" TargetControlID="sldrQ1"  Minimum ="1" Maximum ="5" BoundControlID="txtQ1"/>
             
             &nbsp;
             <br />
-            Queue 1 Run time: 
-            <asp:TextBox ID="txtQ1" runat="server" Width="16px" OnTextChanged="txtQ1_TextChanged" onkeypress ="document.getElementById('txtQ2').innerHTML = this.value;" AutoPostBack="True">1</asp:TextBox>
             <br />
+            Queue 2 Run time: 
+            <asp:TextBox ID="txtQ2" runat="server" Width="16px" OnTextChanged="txtQ2_TextChanged" onkeypress ="document.getElementById('txtQ3').innerHTML = this.value;" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
             <br />
             <asp:TextBox ID="sldrQ2" runat="server"></asp:TextBox>
             <ajaxToolkit:SliderExtender ID="sldrQ2_SliderExtender" runat="server" TargetControlID="sldrQ2"  Minimum ="1" Maximum ="10" BoundControlID="txtQ2"/>
             &nbsp; 
             <br />
-            Queue 2 Run time: 
-            <asp:TextBox ID="txtQ2" runat="server" Width="16px" OnTextChanged="txtQ2_TextChanged" onkeypress ="document.getElementById('txtQ3').innerHTML = this.value;" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
             <br />
+            Queue 3 Run time:
+            <asp:TextBox ID="txtQ3" runat="server" Width="16px" OnTextChanged="txtQ3_TextChanged" onkeypress ="document.getElementById('txtQ4').innerHTML = this.value;" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
             <br />
             <asp:TextBox ID="sldrQ3" runat="server"></asp:TextBox>
             <ajaxToolkit:SliderExtender ID="sldrQ3_SliderExtender" runat="server" TargetControlID="sldrQ3"  Minimum ="1" Maximum ="20" BoundControlID="txtQ3"/>
 &nbsp;
             <br />
-            Queue 3 Run time:
-            <asp:TextBox ID="txtQ3" runat="server" Width="16px" OnTextChanged="txtQ3_TextChanged" onkeypress ="document.getElementById('txtQ4').innerHTML = this.value;" ReadOnly="False">1</asp:TextBox>
             <br />
+            Queue 4 Run time:
+            <asp:TextBox ID="txtQ4" runat="server" Width="16px" OnTextChanged="txtQ4_TextChanged" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
             <br />
             <asp:TextBox ID="sldrQ4" runat="server"></asp:TextBox>
             <ajaxToolkit:SliderExtender ID="sldrQ4_SliderExtender" runat="server" TargetControlID="sldrQ4"  Minimum ="1" Maximum ="40" BoundControlID="txtQ4"/>
 &nbsp;
-            <br />
-            Queue 4 Run time:
-            <asp:TextBox ID="txtQ4" runat="server" Width="16px" OnTextChanged="txtQ4_TextChanged" ReadOnly="False">1</asp:TextBox>
-            <br />
             <br />
             <br />
             <asp:Button ID="btnStep" runat="server" OnClick="btnStep_Click" Text="Step" />
@@ -73,13 +70,14 @@
 &nbsp;&nbsp;&nbsp;
             <br />
             <br />
-            <br />
             Completed Tasks:<br />
             <br />
-            <asp:ListBox ID="lbxCompleted" runat="server" Height="198px" Width="276px"></asp:ListBox>
+            <asp:ListBox ID="lbxCompleted" runat="server" Height="142px" Width="276px"></asp:ListBox>
         </div>
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
+        <br />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="End Scheduler" />
     </form>
 </body>
 </html>

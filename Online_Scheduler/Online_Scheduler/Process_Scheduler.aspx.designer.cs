@@ -49,6 +49,15 @@ namespace Online_Scheduler {
         protected global::System.Web.UI.WebControls.Label lblDisplay;
         
         /// <summary>
+        /// txtQ1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQ1;
+        
+        /// <summary>
         /// sldrQ1 control.
         /// </summary>
         /// <remarks>
@@ -67,13 +76,13 @@ namespace Online_Scheduler {
         protected global::AjaxControlToolkit.SliderExtender sldrQ1_SliderExtender;
         
         /// <summary>
-        /// txtQ1 control.
+        /// txtQ2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQ1;
+        protected global::System.Web.UI.WebControls.TextBox txtQ2;
         
         /// <summary>
         /// sldrQ2 control.
@@ -94,13 +103,13 @@ namespace Online_Scheduler {
         protected global::AjaxControlToolkit.SliderExtender sldrQ2_SliderExtender;
         
         /// <summary>
-        /// txtQ2 control.
+        /// txtQ3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQ2;
+        protected global::System.Web.UI.WebControls.TextBox txtQ3;
         
         /// <summary>
         /// sldrQ3 control.
@@ -121,13 +130,13 @@ namespace Online_Scheduler {
         protected global::AjaxControlToolkit.SliderExtender sldrQ3_SliderExtender;
         
         /// <summary>
-        /// txtQ3 control.
+        /// txtQ4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQ3;
+        protected global::System.Web.UI.WebControls.TextBox txtQ4;
         
         /// <summary>
         /// sldrQ4 control.
@@ -146,15 +155,6 @@ namespace Online_Scheduler {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.SliderExtender sldrQ4_SliderExtender;
-        
-        /// <summary>
-        /// txtQ4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQ4;
         
         /// <summary>
         /// btnStep control.
@@ -227,5 +227,14 @@ namespace Online_Scheduler {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }
