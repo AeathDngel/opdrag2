@@ -19,8 +19,8 @@ namespace Online_Scheduler
             string connectionString;
             SqlConnection cnn;
 
-            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\EstianMSI\source\repos\AeathDngel\opdrag2\Online_Scheduler\Online_Scheduler\App_Data\Process_DB.mdf;Integrated Security=True";
-
+            connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6).Replace("bin", "App_Data") +"\\Process_DB.mdf;Integrated Security=True";
+              
             cnn = new SqlConnection(connectionString);
 
             SqlCommand command;
