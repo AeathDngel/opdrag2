@@ -62,10 +62,9 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form style="margin:40px" id="form1" runat="server">
         <div>
-            <asp:Label ID="Label1" runat="server" Font-Names="Impact" Font-Size="XX-Large" Text="Process Scheduler"></asp:Label>
-            <br />
+            <asp:Label ID="Label1" runat="server" Font-Names="Calibri Light" Font-Size="XX-Large" Text="Process Scheduler"></asp:Label>
             <br />
             <h3>Unloaded Processes:</h3>
             <asp:ListBox ID="lbxProcesses" runat="server" Height="131px" Width="374px"></asp:ListBox>
@@ -81,7 +80,7 @@
             <ajaxToolkit:SliderExtender ID="sldrQ1_SliderExtender" runat="server" TargetControlID="sldrQ1"  Minimum ="1" Maximum ="10" BoundControlID="txtQ1"/>
             
             <h4 style="display:inline-block">Queue 2 Run time:</h4> 
-            <asp:TextBox ID="txtQ2" runat="server" Width="22px" OnTextChanged="txtQ2_TextChanged" onkeypress ="document.getElementById('txtQ3').innerHTML = this.value;" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
+            <asp:TextBox style="display:inline-block"  ID="txtQ2" runat="server" Width="22px" OnTextChanged="txtQ2_TextChanged" onkeypress ="document.getElementById('txtQ3').innerHTML = this.value;" ReadOnly="False" AutoPostBack="True">1</asp:TextBox>
             
             <asp:TextBox ID="sldrQ2" runat="server"></asp:TextBox>
             <ajaxToolkit:SliderExtender ID="sldrQ2_SliderExtender" runat="server" TargetControlID="sldrQ2"  Minimum ="1" Maximum ="10" BoundControlID="txtQ2"/>
@@ -120,6 +119,10 @@
             Completed Tasks:<br />
             <br />
             <asp:ListBox ID="lbxCompleted" runat="server" Height="142px" Width="276px"></asp:ListBox>
+        </div>
+        <div>
+
+
         </div>
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
